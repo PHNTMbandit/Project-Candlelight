@@ -9,7 +9,7 @@ function App() {
   useEffect(() => {
     async function loadNotes() {
       try {
-        const response = await fetch("/api/notes", {
+        const response = await fetch("http://localhost:5000/api/notes", {
           method: "GET",
         });
         const notes = await response.json();
