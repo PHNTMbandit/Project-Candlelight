@@ -1,6 +1,7 @@
 import Note from "@/components/Note";
 import { useEffect, useState } from "react";
 import { Note as NoteModel } from "../models/note";
+import * as NotesApi from "../api/notes-api";
 
 const NotesDashboard = () => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
@@ -8,10 +9,7 @@ const NotesDashboard = () => {
   useEffect(() => {
     async function loadNotes() {
       try {
-        const response = await fetch("http://localhost:5000/api/notes", {
-          method: "GET",
-        });
-        const notes = await response.json();
+        const notes = await NotesApi.fetchNotes();
         setNotes(notes);
       } catch (error) {
         console.error(error);
