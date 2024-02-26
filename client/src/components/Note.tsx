@@ -23,10 +23,10 @@ const Note = ({ note }: NoteProps) => {
   return (
     <Card className="w-96 h-fit overflow-hidden hover:cursor-pointer outline-primary hover:outline">
       <CardHeader>
-        <CardTitle>{note.title}</CardTitle>
+        <CardTitle className="hover:cursor-text">{note.title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <p className="overflow-hidden">{note.text}</p>
+        <p className="overflow-hidden hover:cursor-text">{note.text}</p>
       </CardContent>
       <CardFooter className="flex-col items-start">
         <p className="text-muted-foreground">{createdUpdatedText}</p>
