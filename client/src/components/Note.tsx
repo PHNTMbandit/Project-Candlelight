@@ -21,7 +21,7 @@ const Note = ({ note }: NoteProps) => {
   }
 
   return (
-    <Card className="w-96 h-fit overflow-hidden hover:cursor-pointer outline-primary hover:outline">
+    <Card className="w-96 h-fit overflow-hidden outline-primary hover:outline">
       <CardHeader>
         <CardTitle className="hover:cursor-text">{note.title}</CardTitle>
       </CardHeader>
