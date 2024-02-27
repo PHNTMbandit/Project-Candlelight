@@ -22,6 +22,7 @@ import * as NotesApi from "../api/notes-api";
 import { Note } from "@/models/note";
 
 interface FormProps {
+  noteToEdit?: Note;
   onFormSubmit: (note: Note) => void;
 }
 
@@ -30,18 +31,24 @@ const formSchema = z.object({
   text: z.string().max(1000),
 });
 
-const AddNoteForm = ({ onFormSubmit }: FormProps) => {
+const AddEditNoteForm = ({ noteToEdit, onFormSubmit }: FormProps) => {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      title: "",
-      text: "",
+      title: noteToEdit?.title || "",
+      text: noteToEdit?.text || "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const noteResponse = await NotesApi.createNote(values);
+      let noteResponse: Note;
+      if (noteToEdit) {
+        noteResponse = await NotesApi.updateNote(noteToEdit._id, values);
+      } else {
+        noteResponse = await NotesApi.createNote(values);
+      }
+
       onFormSubmit(noteResponse);
     } catch (error) {
       console.error(error);
@@ -52,7 +59,7 @@ const AddNoteForm = ({ onFormSubmit }: FormProps) => {
   return (
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>Add Note</DialogTitle>
+        <DialogTitle>{noteToEdit ? "Edit Note" : "Add Note"}</DialogTitle>
       </DialogHeader>
 
       <Form {...form}>
@@ -91,18 +98,20 @@ const AddNoteForm = ({ onFormSubmit }: FormProps) => {
                 <FormMessage />
               </FormItem>
             )}
-          />{" "}
-          <DialogClose asChild>
-            <Button
-              disabled={!form.formState.isValid}
-              type="submit">
-              Submit
-            </Button>
-          </DialogClose>
+          />
+          <>
+            <DialogClose asChild>
+              <Button
+                disabled={!form.formState.isValid}
+                type="submit">
+                {noteToEdit ? "Save" : "Add"}
+              </Button>
+            </DialogClose>
+          </>
         </form>
       </Form>
     </DialogContent>
   );
 };
 
-export default AddNoteForm;
+export default AddEditNoteForm;
