@@ -7,12 +7,17 @@ import {
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { Dialog, DialogTrigger } from "@radix-ui/react-dialog";
+import { ReactElement } from "react";
+import { Trash } from "styled-icons/boxicons-regular";
 
 interface NoteProps {
   note: NoteModel;
+  form: ReactElement;
+  onDeleteClick: (note: NoteModel) => void;
 }
 
-const Note = ({ note }: NoteProps) => {
+const Note = ({ note, form, onDeleteClick }: NoteProps) => {
   let createdUpdatedText: string;
   if (note.updatedAt > note.createdAt) {
     createdUpdatedText = `Updated ${formatDate(note.updatedAt)}`;
@@ -21,17 +26,35 @@ const Note = ({ note }: NoteProps) => {
   }
 
   return (
-    <Card className="w-96 h-fit overflow-hidden outline-primary hover:outline">
-      <CardHeader>
-        <CardTitle className="hover:cursor-text">{note.title}</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <p className="overflow-hidden hover:cursor-text">{note.text}</p>
-      </CardContent>
-      <CardFooter className="flex-col items-start">
-        <p className="text-muted-foreground">{createdUpdatedText}</p>
-      </CardFooter>
-    </Card>
+    <div className="flex flex-col items-end gap-4">
+      <Dialog>
+        <button
+          onClick={(e) => {
+            onDeleteClick(note);
+            e.preventDefault();
+          }}>
+          <Trash size={26} />
+        </button>
+        <DialogTrigger>
+          <Card className="w-96 flex flex-col outline-primary hover:outline">
+            <CardHeader>
+              <CardTitle className="text-left break-words">
+                {note.title}
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="text-left">
+              <p className="break-words">{note.text}</p>
+            </CardContent>
+            <CardFooter>
+              <p className="text-left text-muted-foreground">
+                {createdUpdatedText}
+              </p>
+            </CardFooter>
+          </Card>
+        </DialogTrigger>
+        {form}
+      </Dialog>
+    </div>
   );
 };
 
