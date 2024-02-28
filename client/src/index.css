@@ -50,8 +50,16 @@
     --ring: 20.5 90.2% 48.2%;
   }
 
-  .h1-bold {
+  .h1-extrabold {
     @apply text-4xl font-extrabold tracking-tight;
+  }
+
+  .h2-bold {
+    @apply text-4xl font-extrabold tracking-tight;
+  }
+
+  .h4-medium {
+    @apply text-xl font-medium tracking-tight;
   }
 }
 
