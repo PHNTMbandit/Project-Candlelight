@@ -1,9 +1,8 @@
 import { formatDate } from "@/utils/formatDate";
 import { Note as NoteModel } from "../models/note";
-import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { useState } from "react";
 import { Trash } from "styled-icons/boxicons-regular";
-import { Input } from "./ui/input";
+import AutoExpandingTextArea from "./AutoExpandingTextArea";
 
 interface NoteProps {
   note: NoteModel;
@@ -15,11 +14,11 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
   const [titleValue, setTitleValue] = useState(note.title);
   const [textValue, setTextValue] = useState(note.text);
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitleValue(e.target.value);
   };
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(e.target.value);
   };
 
@@ -47,32 +46,28 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
         }}>
         <Trash size={26} />
       </button>
-      <div className="flex flex-col h-fit">
-        <div className="w-96 flex flex-col border-2 rounded-lg outline-primary hover:outline">
-          <Input
-            placeholder="Title"
-            value={titleValue}
-            onChange={handleTitleChange}
-            onBlur={(e) => {
-              handleTitleChange(e);
-              handleSubmitChange();
-            }}
-            className="break-words border-none h-fit text-wrap"
-          />
-          <Input
-            placeholder="Text"
-            type="textarea"
-            contentEditable="true"
-            value={textValue}
-            onChange={handleTextChange}
-            onBlur={(e) => {
-              handleTextChange(e);
-              handleSubmitChange();
-            }}
-            className="break-words border-none max-w-full"
-          />
-          <p className="text-muted-foreground">{createdUpdatedText}</p>
-        </div>
+      <div className="w-96 flex flex-col p-5 gap-5 border-2 rounded-lg outline-primary hover:outline">
+        <AutoExpandingTextArea
+          className="h4-medium"
+          placeholder="Title"
+          value={titleValue}
+          onChange={handleTitleChange}
+          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            handleTitleChange(e);
+            handleSubmitChange();
+          }}
+        />
+        <AutoExpandingTextArea
+          className=""
+          placeholder="Text"
+          value={textValue}
+          onChange={handleTextChange}
+          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+            handleTextChange(e);
+            handleSubmitChange();
+          }}
+        />
+        <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
       </div>
     </div>
   );
