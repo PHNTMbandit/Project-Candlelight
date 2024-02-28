@@ -47,10 +47,6 @@ export const createNote: RequestHandler<
   const text = req.body.text;
 
   try {
-    if (!title) {
-      throw createHttpError(400, "Note must have a title");
-    }
-
     const newNote = await NoteModel.create({
       title: title,
       text: text,
@@ -84,10 +80,6 @@ export const updateNote: RequestHandler<
   try {
     if (!mongoose.isValidObjectId(noteId)) {
       throw createHttpError(400, "Invalid note id");
-    }
-
-    if (!newTitle) {
-      throw createHttpError(400, "Note must have a title");
     }
 
     const note = await NoteModel.findById(noteId).exec();
