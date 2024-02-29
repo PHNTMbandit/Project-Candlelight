@@ -1,4 +1,4 @@
-import { User } from "@/models/user";
+import { User } from "../models/user";
 import { fetchData } from "./api";
 
 export interface SignUpCredentials {
@@ -21,7 +21,7 @@ export async function getLoggedInUser(): Promise<User> {
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {
-  const response = await fetchData("/api/users/signup", {
+  const response = await fetchData("http://localhost:5000/api/users/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -33,7 +33,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
 }
 
 export async function logIn(credentials: LogInCredentials): Promise<User> {
-  const response = await fetchData("/api/users/login", {
+  const response = await fetchData("http://localhost:5000/api/users/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,7 +45,7 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
 }
 
 export async function logOut() {
-  await fetchData("/api/users/logout", {
+  await fetchData("http://localhost:5000/api/users/logout", {
     method: "POST",
   });
 }

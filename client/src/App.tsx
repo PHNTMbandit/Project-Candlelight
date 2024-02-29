@@ -13,6 +13,7 @@ function App() {
     async function fetchLoggedInUser() {
       try {
         const user = await UserApi.getLoggedInUser();
+        console.log(user);
         setLoggedInUser(user);
       } catch (error) {
         console.error(error);
