@@ -1,22 +1,9 @@
-import { useEffect, useState } from "react";
-import { User } from "../models/user";
-import * as UserApi from "../api/users-api";
+"use client";
+
+import { useLoggedInUserContext } from "@/contexts/LoggedInUserContextProvider";
 
 const NavBar = () => {
-  const [loggedInUser, setLoggedInUser] = useState<User | null>();
-
-  useEffect(() => {
-    async function fetchLoggedInUser() {
-      try {
-        const user = await UserApi.getLoggedInUser();
-        console.log(user);
-        setLoggedInUser(user);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchLoggedInUser();
-  });
+  const { loggedInUser, setLoggedInUser } = useLoggedInUserContext();
 
   return (
     <nav>

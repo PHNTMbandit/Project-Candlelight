@@ -3,13 +3,16 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "./components/ui/theme-provider.tsx";
+import LoggedInUserContextProvider from "./contexts/LoggedInUserContextProvider";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ThemeProvider
-      defaultTheme="dark"
-      storageKey="vite-ui-theme">
-      <App />
-    </ThemeProvider>
+    <LoggedInUserContextProvider>
+      <ThemeProvider
+        defaultTheme="dark"
+        storageKey="vite-ui-theme">
+        <App />
+      </ThemeProvider>
+    </LoggedInUserContextProvider>
   </React.StrictMode>
 );

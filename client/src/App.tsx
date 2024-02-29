@@ -1,10 +1,26 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import NotesDashboard from "./pages/NotesDashboard";
 import SignUpForm from "./components/forms/SignUpForm";
 import LogInForm from "./components/forms/LogInForm";
 import NavBar from "./components/NavBar";
+import { useEffect } from "react";
+import * as UserApi from "./api/users-api";
+import { useLoggedInUserContext } from "./contexts/LoggedInUserContextProvider";
 
 function App() {
+  const { loggedInUser, setLoggedInUser } = useLoggedInUserContext();
+
+  useEffect(() => {
+    async function fetchLoggedInUser() {
+      try {
+        const user = await UserApi.getLoggedInUser();
+        setLoggedInUser(user);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchLoggedInUser();
+  }, [setLoggedInUser]);
+
   return (
     <Router>
       <Routes>
@@ -13,7 +29,7 @@ function App() {
           element={
             <div className="p-10">
               <NavBar />
-              <NotesDashboard />
+              {/* <NotesDashboard /> */}
             </div>
           }
         />
@@ -29,7 +45,13 @@ function App() {
           path="/login"
           element={
             <div>
-              <LogInForm />
+              <p>{loggedInUser?.username}</p>
+              <LogInForm
+                onLoggedIn={(user) => {
+                  console.log(user);
+                  setLoggedInUser(user);
+                }}
+              />
             </div>
           }
         />

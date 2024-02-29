@@ -63,7 +63,7 @@ const NotesDashboard = () => {
         className="rounded hover:outline hover:outline-offset-4 hover:cursor-pointer"
       />
 
-      {notes.length > 0 ? (
+      {/* {notes.length > 0 ? (
         <div className="flex flex-wrap items-start gap-10">
           {notes.map((note, index) => (
             <Note
@@ -76,7 +76,7 @@ const NotesDashboard = () => {
         </div>
       ) : (
         <p>No new notes</p>
-      )}
+      )} */}
     </div>
   );
 };

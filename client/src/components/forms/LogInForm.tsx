@@ -13,13 +13,18 @@ import {
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
 import VerticalLogo from "../VerticalLogo";
+import { User } from "@/models/user";
+
+interface LogInFormProps {
+  onLoggedIn: (user: User) => void;
+}
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
   password: z.string().min(2).max(50),
 });
 
-export const LogInForm = () => {
+export const LogInForm = ({ onLoggedIn }: LogInFormProps) => {
   const {
     formState: { errors, isSubmitting },
   } = useForm<UserApi.LogInCredentials>();
@@ -34,8 +39,8 @@ export const LogInForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const user = await UserApi.logIn(values);
-      window.location.href = "/dashboard";
+      onLoggedIn(await UserApi.logIn(values));
+      //window.location.href = "/dashboard";
     } catch (error) {
       alert(error);
       console.error(error);
