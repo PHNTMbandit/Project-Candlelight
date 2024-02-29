@@ -12,10 +12,11 @@ export interface LogInCredentials {
   password: string;
 }
 
-export async function getLoggedinUser(): Promise<User> {
-  const response = await fetchData("http://localhost:5000/api/users", {
+export async function getLoggedInUser(): Promise<User> {
+  const response = await fetchData("http://localhost:5000/api/users/", {
     method: "GET",
   });
+
   return response.json();
 }
 
@@ -39,7 +40,7 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
     },
     body: JSON.stringify(credentials),
   });
-
+  console.log(credentials);
   return response.json();
 }
 
