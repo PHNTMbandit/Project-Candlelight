@@ -46,7 +46,7 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
         }}>
         <Trash size={26} />
       </button>
-      <div className="w-96 flex flex-col p-5 gap-5 border-2 rounded-lg outline-primary hover:outline">
+      <div className="w-96 flex flex-col p-4 gap-4 border-2 rounded-lg outline-primary hover:outline">
         <AutoExpandingTextArea
           className="h4-medium"
           placeholder="Title"
@@ -67,7 +67,9 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
             handleSubmitChange();
           }}
         />
-        <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
+        <p className="text-xs text-muted-foreground mt-8">
+          {createdUpdatedText}
+        </p>
       </div>
     </div>
   );
