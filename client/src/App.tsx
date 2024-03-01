@@ -5,6 +5,7 @@ import NavBar from "./components/NavBar";
 import { useEffect } from "react";
 import * as UserApi from "./api/users-api";
 import { useLoggedInUserContext } from "./contexts/LoggedInUserContextProvider";
+import NotesDashboard from "./pages/NotesDashboard";
 
 function App() {
   const { loggedInUser, setLoggedInUser } = useLoggedInUserContext();
