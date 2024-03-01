@@ -30,7 +30,7 @@ function App() {
           path="/dashboard"
           element={
             <div className="p-10">
-              <NavBar />
+              <NavBar user={loggedInUser} />
               {/* <NotesDashboard /> */}
             </div>
           }
@@ -50,7 +50,6 @@ function App() {
               <p>{loggedInUser?.username}</p>
               <LogInForm
                 onLoggedIn={(user) => {
-                  console.log(user);
                   setLoggedInUser(user);
                 }}
               />

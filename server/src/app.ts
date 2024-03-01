@@ -23,10 +23,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      domain: "localhost",
-      path: "/",
       sameSite: "none",
-      secure: true,
       httpOnly: true,
     },
     rolling: true,

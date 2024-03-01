@@ -1,13 +1,16 @@
 "use client";
 
-import { useLoggedInUserContext } from "@/contexts/LoggedInUserContextProvider";
+import { User } from "@/models/user";
 
-const NavBar = () => {
-  const { loggedInUser, setLoggedInUser } = useLoggedInUserContext();
+interface NavBarProps {
+  user: User | null;
+}
 
+const NavBar = ({ user }: NavBarProps) => {
+  console.log(user);
   return (
     <nav>
-      <p>{loggedInUser?.username}</p>
+      <p>{user?.username}</p>
     </nav>
   );
 };
