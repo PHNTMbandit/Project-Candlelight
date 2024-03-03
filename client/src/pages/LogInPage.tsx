@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import * as UserApi from "../../api/users-api";
+import * as UserApi from "../api/users-api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,32 +12,36 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Link } from "react-router-dom";
-import VerticalLogo from "../VerticalLogo";
+import VerticalLogo from "../components/VerticalLogo";
+import { User } from "@/models/user";
+
+interface LogInPageProps {
+  onLoggedIn: (user: User) => void;
+}
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
-  email: z.string().min(2).max(50).email(),
   password: z.string().min(2).max(50),
 });
 
-export const SignUpForm = () => {
+export const LogInPage = ({ onLoggedIn }: LogInPageProps) => {
   const {
     formState: { isSubmitting },
-  } = useForm<UserApi.SignUpCredentials>();
+  } = useForm<UserApi.LogInCredentials>();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       username: "",
-      email: "",
       password: "",
     },
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const user = await UserApi.signUp(values);
-      window.location.href = "/dashboard";
+      const user = await UserApi.logIn(values);
+      onLoggedIn(user);
+      window.location.href = "/notes";
     } catch (error) {
       alert(error);
       console.error(error);
@@ -48,7 +52,7 @@ export const SignUpForm = () => {
     <div className="flex flex-col gap-20 h-screen w-screen items-center justify-center">
       <VerticalLogo />
       <div className="flex flex-col gap-4 justify-center items-center">
-        <h1 className="h1-extrabold">Sign Up</h1>
+        <h1 className="h1-extrabold">Log In</h1>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
@@ -64,26 +68,6 @@ export const SignUpForm = () => {
                         required={true}
                         className="p"
                         placeholder="Username"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                </div>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <div className="space-y-4">
-                  <FormItem>
-                    <FormControl>
-                      <Input
-                        required={true}
-                        className="p"
-                        placeholder="Email"
-                        type="email"
                         {...field}
                       />
                     </FormControl>
@@ -120,11 +104,11 @@ export const SignUpForm = () => {
           </form>
         </Form>
         <p className="p">
-          Already have an account?{" "}
+          Don't have an account?{" "}
           <Link
-            to="/login"
+            to="/signup"
             className="underline text-primary">
-            Log in
+            Sign up
           </Link>
         </p>
       </div>
@@ -132,4 +116,4 @@ export const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default LogInPage;

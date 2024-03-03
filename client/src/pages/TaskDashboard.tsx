@@ -1,12 +1,11 @@
-import Note from "@/components/Note";
 import * as NotesApi from "../api/notes-api";
 import * as UserApi from "../api/users-api";
 import { useEffect, useState } from "react";
 import { Note as NoteModel } from "../models/note";
 import { NoteInput } from "../api/notes-api";
-import { Add } from "@styled-icons/remix-line/Add";
+import { Plus } from "styled-icons/boxicons-regular";
 
-const NotesDashboard = () => {
+const TaskDashboard = () => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
 
   useEffect(() => {
@@ -21,7 +20,7 @@ const NotesDashboard = () => {
   }, []);
 
   useEffect(() => {
-    async function loadNotes() {
+    async function loadTasks() {
       try {
         const notes = await NotesApi.fetchNotes();
         setNotes(notes);
@@ -29,10 +28,10 @@ const NotesDashboard = () => {
         console.error(error);
       }
     }
-    loadNotes();
+    loadTasks();
   }, []);
 
-  async function createNote(note: NoteInput) {
+  async function createTask(note: NoteInput) {
     try {
       const newNote = await NotesApi.createNote(note);
       setNotes([...notes, newNote]);
@@ -42,7 +41,7 @@ const NotesDashboard = () => {
     }
   }
 
-  async function deleteNote(note: NoteModel) {
+  async function deleteTask(note: NoteModel) {
     try {
       await NotesApi.deleteNote(note._id);
       setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
@@ -52,7 +51,7 @@ const NotesDashboard = () => {
     }
   }
 
-  async function updateNote(note: NoteModel) {
+  async function updateTask(note: NoteModel) {
     try {
       await NotesApi.updateNote(note._id, note);
       setNotes(
@@ -68,30 +67,15 @@ const NotesDashboard = () => {
 
   return (
     <div className="space-y-6 p-6">
-      <h1 className="h4-medium">Notes</h1>
+      <h1 className="h4-medium">Tasks</h1>
       <div className="space-x-4">
-        <button onClick={() => createNote({ title: "", text: "" })}>
-          <Add size={32} />
+        <button onClick={() => createTask({ title: "", text: "" })}>
+          <Plus size={26} />
         </button>
       </div>
-      <div>
-        {notes.length > 0 ? (
-          <div className="flex flex-wrap items-start gap-10">
-            {notes.map((note, index) => (
-              <Note
-                key={index}
-                note={note}
-                onDeleteClick={deleteNote}
-                onUpdateNote={updateNote}
-              />
-            ))}
-          </div>
-        ) : (
-          <p>No new notes</p>
-        )}
-      </div>
+      <div></div>
     </div>
   );
 };
 
-export default NotesDashboard;
+export default TaskDashboard;

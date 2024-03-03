@@ -8,12 +8,16 @@ import MongoStore from "connect-mongo";
 import notesRoutes from "./routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
+import { requiresAuth } from "./middleware/auth";
+import cookieParser from "cookie-parser";
 
 const app = express();
 
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
 
 app.use(
   session({
@@ -31,7 +35,7 @@ app.use(
 );
 
 app.use("/api/users", userRoutes);
-app.use("/api/notes", notesRoutes);
+app.use("/api/notes", requiresAuth, notesRoutes);
 
 app.use((res, req, next) => {
   next(createHttpError(404, "Endpoint not found"));

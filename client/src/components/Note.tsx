@@ -1,8 +1,8 @@
 import { formatDate } from "@/utils/formatDate";
 import { Note as NoteModel } from "../models/note";
 import { useState } from "react";
-import { Trash } from "styled-icons/boxicons-regular";
 import AutoExpandingTextArea from "./AutoExpandingTextArea";
+import { Trash } from "styled-icons/boxicons-regular";
 
 interface NoteProps {
   note: NoteModel;
@@ -38,15 +38,13 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
   }
 
   return (
-    <div className="flex flex-col items-end gap-4">
+    <div className="flex items-start group gap-3">
       <button
-        onClick={(e) => {
-          onDeleteClick(note);
-          e.preventDefault();
-        }}>
+        className="invisible group-hover:visible"
+        onClick={() => onDeleteClick(note)}>
         <Trash size={26} />
       </button>
-      <div className="w-96 flex flex-col p-4 gap-4 border-2 rounded-lg outline-primary hover:outline">
+      <div className="flex flex-col gap-4 group w-96 h-full p-4 border-2 rounded-lg outline-primary hover:outline">
         <AutoExpandingTextArea
           className="h4-medium"
           placeholder="Title"
