@@ -3,19 +3,17 @@ import * as NotesApi from "../api/notes-api";
 import * as UserApi from "../api/users-api";
 import { useEffect, useState } from "react";
 import { Note as NoteModel } from "../models/note";
-import { NoteSticky } from "@styled-icons/fa-regular/NoteSticky";
 import { NoteInput } from "../api/notes-api";
-import { User } from "@/models/user";
+import { Trash } from "styled-icons/boxicons-regular";
+import { Plus } from "styled-icons/boxicons-regular";
 
 const NotesDashboard = () => {
   const [notes, setNotes] = useState<NoteModel[]>([]);
-  const [loggedInUser, setLoggedInUser] = useState<User | null>(null);
 
   useEffect(() => {
     async function fetchLoggedInUser() {
       try {
-        const user = await UserApi.getLoggedInUser();
-        setLoggedInUser(user);
+        await UserApi.getLoggedInUser();
       } catch (error) {
         console.error(error);
       }
@@ -45,7 +43,7 @@ const NotesDashboard = () => {
     }
   }
 
-  async function deleteNote(note: NoteModel) {
+  async function deleteNotes(note: NoteModel) {
     try {
       await NotesApi.deleteNote(note._id);
       setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
@@ -70,28 +68,35 @@ const NotesDashboard = () => {
   }
 
   return (
-    <div className="space-y-4">
-      <p>{loggedInUser?.username}</p>
-      <NoteSticky
-        size={26}
-        onClick={() => createNote({ title: "", text: "" })}
-        className="rounded hover:outline hover:outline-offset-4 hover:cursor-pointer"
-      />
-
-      {notes.length > 0 ? (
-        <div className="flex flex-wrap items-start gap-10">
-          {notes.map((note, index) => (
-            <Note
-              key={index}
-              note={note}
-              onDeleteClick={deleteNote}
-              onUpdateNote={updateNote}
-            />
-          ))}
-        </div>
-      ) : (
-        <p>No new notes</p>
-      )}
+    <div className="space-y-6 p-6">
+      <h1 className="h4-medium">Notes</h1>
+      <div className="space-x-4">
+        <button onClick={() => createNote({ title: "", text: "" })}>
+          <Plus size={26} />
+        </button>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+          }}>
+          <Trash size={26} />
+        </button>
+      </div>
+      <div>
+        {notes.length > 0 ? (
+          <div className="flex flex-wrap items-start gap-10">
+            {notes.map((note, index) => (
+              <Note
+                key={index}
+                note={note}
+                onClick={() => {}}
+                onUpdateNote={updateNote}
+              />
+            ))}
+          </div>
+        ) : (
+          <p>No new notes</p>
+        )}
+      </div>
     </div>
   );
 };

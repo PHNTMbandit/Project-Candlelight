@@ -1,5 +1,5 @@
-import TextareaAutosize from "react-textarea-autosize";
 import { twMerge } from "tailwind-merge";
+import TextareaAutosize from "react-textarea-autosize";
 
 interface Props {
   className?: string;

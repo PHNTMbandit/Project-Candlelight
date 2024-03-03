@@ -1,16 +1,16 @@
 import { formatDate } from "@/utils/formatDate";
 import { Note as NoteModel } from "../models/note";
 import { useState } from "react";
-import { Trash } from "styled-icons/boxicons-regular";
 import AutoExpandingTextArea from "./AutoExpandingTextArea";
+import { Toggle } from "./ui/toggle";
 
 interface NoteProps {
   note: NoteModel;
-  onDeleteClick: (note: NoteModel) => void;
+  onClick: (note: NoteModel) => void;
   onUpdateNote: (note: NoteModel) => void;
 }
 
-const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
+const Note = ({ note, onClick, onUpdateNote }: NoteProps) => {
   const [titleValue, setTitleValue] = useState(note.title);
   const [textValue, setTextValue] = useState(note.text);
 
@@ -38,40 +38,31 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
   }
 
   return (
-    <div className="flex flex-col items-end gap-4">
-      <button
-        onClick={(e) => {
-          onDeleteClick(note);
-          e.preventDefault();
-        }}>
-        <Trash size={26} />
-      </button>
-      <div className="w-96 flex flex-col p-4 gap-4 border-2 rounded-lg outline-primary hover:outline">
-        <AutoExpandingTextArea
-          className="h4-medium"
-          placeholder="Title"
-          value={titleValue}
-          onChange={handleTitleChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTitleChange(e);
-            handleSubmitChange();
-          }}
-        />
-        <AutoExpandingTextArea
-          className=""
-          placeholder="Text"
-          value={textValue}
-          onChange={handleTextChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTextChange(e);
-            handleSubmitChange();
-          }}
-        />
-        <p className="text-xs text-muted-foreground mt-8">
-          {createdUpdatedText}
-        </p>
-      </div>
-    </div>
+    <Toggle
+      onClick={() => onClick(note)}
+      className="flex flex-col gap-4 group w-96 h-full p-4 border-2 rounded-lg outline-primary hover:outline">
+      <AutoExpandingTextArea
+        className="h4-medium"
+        placeholder="Title"
+        value={titleValue}
+        onChange={handleTitleChange}
+        onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          handleTitleChange(e);
+          handleSubmitChange();
+        }}
+      />
+      <AutoExpandingTextArea
+        className=""
+        placeholder="Text"
+        value={textValue}
+        onChange={handleTextChange}
+        onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
+          handleTextChange(e);
+          handleSubmitChange();
+        }}
+      />
+      <p className="text-xs text-muted-foreground mt-8">{createdUpdatedText}</p>
+    </Toggle>
   );
 };
 
