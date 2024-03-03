@@ -16,7 +16,7 @@ const HorizontalLogo = ({ className }: HorizontalLogoProps) => {
           alt="Logo"
           className="object-contain h-8 w-12"
         />
-        <h1 className="title text-sm">Candlelight</h1>
+        <h1 className="title text-xl">Candlelight</h1>
       </div>
     </button>
   );

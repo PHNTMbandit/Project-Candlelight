@@ -5,6 +5,7 @@ import NotesDashboard from "./pages/NotesDashboard";
 import { useUserContext } from "./contexts/UserContextProvider";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ActionBar from "./components/ActionBar";
+import TaskDashboard from "./pages/TaskDashboard";
 
 function App() {
   const { setUser } = useUserContext();
@@ -20,6 +21,18 @@ function App() {
               <div className="flex">
                 <ActionBar />
                 <NotesDashboard />
+              </div>
+            </>
+          }
+        />
+        <Route
+          path="/tasks"
+          element={
+            <>
+              <NavBar />
+              <div className="flex">
+                <ActionBar />
+                <TaskDashboard />
               </div>
             </>
           }

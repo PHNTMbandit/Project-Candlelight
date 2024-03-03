@@ -23,7 +23,7 @@ const NavBar = () => {
 
   return (
     <nav>
-      <div className="flex justify-between p-2 pb-2 pl-2 pr-4">
+      <div className="flex justify-between items-center p-2 pb-2 pl-2 pr-5 h-16">
         <HorizontalLogo />
         <div className="flex gap-3">
           <Username user={user} />
