@@ -2,26 +2,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import SignUpForm from "./components/forms/SignUpForm";
 import LogInForm from "./components/forms/LogInForm";
 import NavBar from "./components/NavBar";
-import { useEffect } from "react";
-import * as UserApi from "./api/users-api";
-import { useLoggedInUserContext } from "./contexts/LoggedInUserContextProvider";
+import { useUserContext } from "./contexts/UserContextProvider";
 import NotesDashboard from "./pages/NotesDashboard";
 
 function App() {
-  const { loggedInUser, setLoggedInUser } = useLoggedInUserContext();
-
-  useEffect(() => {
-    async function fetchLoggedInUser() {
-      try {
-        const user = await UserApi.getLoggedInUser();
-        console.log(user);
-        setLoggedInUser(user);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchLoggedInUser();
-  }, [setLoggedInUser]);
+  const { user, setUser } = useUserContext();
 
   return (
     <Router>
@@ -30,8 +15,8 @@ function App() {
           path="/dashboard"
           element={
             <div className="p-10">
-              <NavBar user={loggedInUser} />
-              {/* <NotesDashboard /> */}
+              <NavBar />
+              <NotesDashboard />
             </div>
           }
         />
@@ -47,10 +32,10 @@ function App() {
           path="/login"
           element={
             <div>
-              <p>{loggedInUser?.username}</p>
+              <p>{user?.username}</p>
               <LogInForm
                 onLoggedIn={(user) => {
-                  setLoggedInUser(user);
+                  setUser(user);
                 }}
               />
             </div>

@@ -36,8 +36,8 @@ export const SignUpForm = () => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      const user = await UserApi.signUp(values);
-      window.location.href = "/dashboard";
+      await UserApi.signUp(values);
+      window.location.href = "/login";
     } catch (error) {
       alert(error);
       console.error(error);

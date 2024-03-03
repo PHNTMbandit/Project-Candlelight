@@ -9,7 +9,6 @@ export const getAuthenticatedUser: RequestHandler = async (req, res, next) => {
       .select("+email")
       .exec();
     res.status(200).json(user);
-    console.log(user);
   } catch (error) {
     next(error);
   }

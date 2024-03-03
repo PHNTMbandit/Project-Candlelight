@@ -39,9 +39,8 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(credentials),
-    credentials: "include",
   });
-  console.log(response.status);
+
   return response.json();
 }
 

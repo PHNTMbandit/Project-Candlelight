@@ -1,18 +1,11 @@
 "use client";
 
-import { User } from "@/models/user";
+import { useUserContext } from "@/contexts/UserContextProvider";
 
-interface NavBarProps {
-  user: User | null;
-}
+const NavBar = () => {
+  const { user } = useUserContext();
 
-const NavBar = ({ user }: NavBarProps) => {
-  console.log(user);
-  return (
-    <nav>
-      <p>{user?.username}</p>
-    </nav>
-  );
+  return <nav>{user?.username}</nav>;
 };
 
 export default NavBar;

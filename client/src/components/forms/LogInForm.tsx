@@ -39,8 +39,9 @@ export const LogInForm = ({ onLoggedIn }: LogInFormProps) => {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      onLoggedIn(await UserApi.logIn(values));
-      // window.location.href = "/dashboard";
+      const user = await UserApi.logIn(values);
+      onLoggedIn(user);
+      window.location.href = "/dashboard";
     } catch (error) {
       alert(error);
       console.error(error);
