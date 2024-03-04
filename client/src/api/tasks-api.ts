@@ -11,7 +11,7 @@ export async function fetchTasks(): Promise<Task[]> {
 export interface TaskInput {
   title: string;
   check: boolean;
-  dueDate: Date;
+  dueDate?: Date;
 }
 
 export async function createTask(task: TaskInput): Promise<Task> {

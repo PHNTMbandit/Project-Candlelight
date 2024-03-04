@@ -61,7 +61,7 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
     onUpdateTask(task);
   };
 
-  const handleDueDateChange = (e: Date) => {
+  const handleDueDateChange = (e: Date | undefined) => {
     setDueDateValue(e);
     task.dueDate = e;
     onUpdateTask(task);
@@ -118,7 +118,9 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
               <Calendar
                 mode="single"
                 selected={dueDateValue}
-                onSelect={handleDueDateChange}
+                onSelect={(e) => {
+                  handleDueDateChange(e);
+                }}
                 initialFocus
               />
             </PopoverContent>
