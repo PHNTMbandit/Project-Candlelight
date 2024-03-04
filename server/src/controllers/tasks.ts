@@ -47,6 +47,7 @@ export const getTask: RequestHandler = async (req, res, next) => {
 interface CreateTaskBody {
   title?: string;
   check?: boolean;
+  dueDate?: Date;
 }
 
 export const createTask: RequestHandler<
@@ -57,6 +58,7 @@ export const createTask: RequestHandler<
 > = async (req, res, next) => {
   const title = req.body.title;
   const check = req.body.check;
+  const dueDate = req.body.dueDate;
   const authenticatedUserId = req.session.userId;
 
   try {
@@ -66,6 +68,7 @@ export const createTask: RequestHandler<
       userId: authenticatedUserId,
       title: title,
       check: check,
+      dueDate: dueDate,
     });
 
     res.status(201).json(newTask);
@@ -81,6 +84,7 @@ interface UpdateTaskParams {
 interface UpdateTaskBody {
   title?: string;
   check: boolean;
+  dueDate?: Date;
 }
 
 export const updateTask: RequestHandler<
@@ -92,6 +96,7 @@ export const updateTask: RequestHandler<
   const taskId = req.params.taskId;
   const newTitle = req.body.title;
   const newCheck = req.body.check;
+  const newDueDate = req.body.dueDate;
   const authenticatedUserId = req.session.userId;
 
   try {
@@ -113,6 +118,7 @@ export const updateTask: RequestHandler<
 
     task.title = newTitle;
     task.check = newCheck;
+    task.dueDate = newDueDate;
 
     const updatedTask = await task.save();
 

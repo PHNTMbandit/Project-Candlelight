@@ -70,7 +70,10 @@ const TaskDashboard = () => {
     <div className="space-y-6 p-6">
       <h1 className="h4-medium">Tasks</h1>
       <div className="space-x-4">
-        <button onClick={() => createTask({ title: "", check: false })}>
+        <button
+          onClick={() =>
+            createTask({ title: "", check: false, dueDate: new Date() })
+          }>
           <Add size={32} />
         </button>
       </div>

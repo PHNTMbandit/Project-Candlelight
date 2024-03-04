@@ -4,6 +4,17 @@ import { Task as TaskModel } from "../models/task";
 import { Trash } from "styled-icons/boxicons-regular";
 import { Checkbox } from "./ui/checkbox";
 import AutoExpandingTextArea from "./AutoExpandingTextArea";
+import * as React from "react";
+import { format } from "date-fns";
+import { Calendar as CalendarIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 interface TaskProps {
   task: TaskModel;
@@ -14,19 +25,19 @@ interface TaskProps {
 const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
   const [titleValue, setTitleValue] = useState(task.title);
   const [checkValue, setCheckValue] = useState(task.check);
-
-  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setTitleValue(e.target.value);
-  };
-
-  const handleCheckChange = (e: boolean) => {
-    setCheckValue(e);
-  };
+  const [dueDateValue, setDueDateValue] = useState<Date | undefined>(
+    task.dueDate
+  );
 
   const handleSubmitChange = () => {
-    if (task.title !== titleValue || task.check !== checkValue) {
+    if (
+      task.title !== titleValue ||
+      task.check !== checkValue ||
+      task.dueDate !== dueDateValue
+    ) {
       task.title = titleValue;
       task.check = checkValue;
+      task.dueDate = dueDateValue;
       onUpdateTask(task);
     }
   };
@@ -49,7 +60,7 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
         <div className="flex items-center gap-5">
           <Checkbox
             checked={checkValue}
-            onCheckedChange={handleCheckChange}
+            onCheckedChange={(e: boolean) => setCheckValue(e)}
             onPointerLeave={handleSubmitChange}
           />
           <AutoExpandingTextArea
@@ -58,10 +69,37 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
             }
             placeholder="Title"
             value={titleValue}
-            onChange={handleTitleChange}
+            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+              setTitleValue(e.target.value)
+            }
             onPointerLeave={handleSubmitChange}
           />
         </div>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              variant={"outline"}
+              className={cn(
+                "w-[280px] justify-start text-left font-normal",
+                !dueDateValue && "text-muted-foreground"
+              )}>
+              <CalendarIcon className="mr-2 h-4 w-4" />
+              {dueDateValue ? (
+                format(dueDateValue, "PPP")
+              ) : (
+                <span>Pick a due date</span>
+              )}
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent className="w-auto p-0">
+            <Calendar
+              mode="single"
+              selected={dueDateValue}
+              onSelect={setDueDateValue}
+              initialFocus
+            />
+          </PopoverContent>
+        </Popover>
         <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
       </div>
     </div>

@@ -5,6 +5,7 @@ const TaskSchema = new Schema(
     userId: { type: Schema.Types.ObjectId, required: true },
     title: { type: String },
     check: { type: Boolean, default: false, required: true },
+    dueDate: { type: Date },
   },
   { timestamps: true }
 );
