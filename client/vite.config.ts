@@ -12,7 +12,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: "https://doms-api.pittari.de",
+        target: "https://candlelight.pittari.de",
         changeOrigin: true,
       },
     },
