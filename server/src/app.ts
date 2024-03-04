@@ -4,6 +4,7 @@ import morgan from "morgan";
 import env from "./util/validateEnv";
 import session from "express-session";
 import userRoutes from "./routes/user";
+import tasksRoutes from "./routes/tasks";
 import MongoStore from "connect-mongo";
 import notesRoutes from "./routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
@@ -36,6 +37,7 @@ app.use(
 
 app.use("/api/users", userRoutes);
 app.use("/api/notes", requiresAuth, notesRoutes);
+app.use("/api/tasks", requiresAuth, tasksRoutes);
 
 app.use((res, req, next) => {
   next(createHttpError(404, "Endpoint not found"));

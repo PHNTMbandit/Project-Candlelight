@@ -38,7 +38,7 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
   }
 
   return (
-    <div className="flex items-start group gap-3">
+    <div className="flex items-center group gap-3">
       <button
         className="invisible group-hover:visible"
         onClick={() => onDeleteClick(note)}>
@@ -50,20 +50,14 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
           placeholder="Title"
           value={titleValue}
           onChange={handleTitleChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTitleChange(e);
-            handleSubmitChange();
-          }}
+          onPointerLeave={handleSubmitChange}
         />
         <AutoExpandingTextArea
           className=""
           placeholder="Text"
           value={textValue}
           onChange={handleTextChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTextChange(e);
-            handleSubmitChange();
-          }}
+          onPointerLeave={handleSubmitChange}
         />
         <p className="text-xs text-muted-foreground mt-8">
           {createdUpdatedText}

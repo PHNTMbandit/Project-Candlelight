@@ -6,7 +6,7 @@ interface Props {
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
-  onBlur?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
+  onPointerLeave?: (e: React.PointerEvent<HTMLTextAreaElement>) => void;
 }
 
 const AutoExpandingTextArea = ({
@@ -14,14 +14,14 @@ const AutoExpandingTextArea = ({
   placeholder,
   value,
   onChange,
-  onBlur,
+  onPointerLeave,
 }: Props) => {
   return (
     <TextareaAutosize
       placeholder={placeholder}
       value={value}
       onChange={onChange}
-      onBlur={onBlur}
+      onPointerLeave={onPointerLeave}
       className={twMerge(
         `${className} relative w-full bg-transparent resize-none outline-none`
       )}></TextareaAutosize>
