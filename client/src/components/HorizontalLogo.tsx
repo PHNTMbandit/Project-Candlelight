@@ -8,7 +8,7 @@ const HorizontalLogo = ({ className }: HorizontalLogoProps) => {
   return (
     <button
       onClick={() => {
-        window.location.href = "/dashboard";
+        window.location.href = "/notes";
       }}>
       <div className={twMerge(`${className} flex items-center`)}>
         <img

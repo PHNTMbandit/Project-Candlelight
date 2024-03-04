@@ -132,7 +132,9 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
             <p className="p-small">{timeDifferenceString}</p>
           </div>
         )}
-        <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
+        <p className="text-xs xl:text-sm text-muted-foreground">
+          {createdUpdatedText}
+        </p>
       </div>
     </div>
   );
