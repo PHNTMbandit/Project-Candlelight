@@ -1,8 +1,9 @@
 import { twMerge } from "tailwind-merge";
 import TextareaAutosize from "react-textarea-autosize";
 
-interface Props {
+interface AutoExpandingTextAreaProps {
   className?: string;
+  disabled?: boolean;
   placeholder?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
@@ -11,13 +12,15 @@ interface Props {
 
 const AutoExpandingTextArea = ({
   className,
+  disabled,
   placeholder,
   value,
   onChange,
   onPointerLeave,
-}: Props) => {
+}: AutoExpandingTextAreaProps) => {
   return (
     <TextareaAutosize
+      disabled={disabled}
       placeholder={placeholder}
       value={value}
       onChange={onChange}

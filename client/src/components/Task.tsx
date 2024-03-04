@@ -49,17 +49,22 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
     }
   }
 
-  const handleSubmitChange = () => {
-    if (
-      task.title !== titleValue ||
-      task.check !== checkValue ||
-      task.dueDate !== dueDateValue
-    ) {
-      task.title = titleValue;
-      task.check = checkValue;
-      task.dueDate = dueDateValue;
-      onUpdateTask(task);
-    }
+  const handleCheckChange = (e: boolean) => {
+    setCheckValue(e);
+    task.check = e;
+    onUpdateTask(task);
+  };
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setTitleValue(e.target.value);
+    task.title = e.target.value;
+    onUpdateTask(task);
+  };
+
+  const handleDueDateChange = (e: Date) => {
+    setDueDateValue(e);
+    task.dueDate = e;
+    onUpdateTask(task);
   };
 
   let createdUpdatedText: string;
@@ -76,54 +81,55 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
         onClick={() => onDeleteClick(task)}>
         <Trash size={26} />
       </button>
-      <div className="flex flex-col gap-4 group w-96 h-full p-4 border-2 rounded-lg outline-primary hover:outline">
+      <div className="flex flex-col gap-4 group w-[230px] xl:w-[450px] p-4 border-2 rounded-lg outline-primary hover:outline">
         <div className="flex items-center gap-5">
           <Checkbox
             checked={checkValue}
-            onCheckedChange={(e: boolean) => setCheckValue(e)}
-            onPointerLeave={handleSubmitChange}
+            onCheckedChange={handleCheckChange}
           />
           <AutoExpandingTextArea
+            disabled={checkValue}
             className={
               checkValue ? "text-green-500" : "text-primary" + "h4-medium"
             }
             placeholder="Title"
             value={titleValue}
-            onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-              setTitleValue(e.target.value)
-            }
-            onPointerLeave={handleSubmitChange}
+            onChange={handleTitleChange}
           />
         </div>
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              variant={"outline"}
-              className={cn(
-                "w-[280px] justify-start text-left font-normal",
-                !dueDateValue && "text-muted-foreground"
-              )}>
-              <CalendarIcon className="mr-2 h-4 w-4" />
-              {dueDateValue ? (
-                format(dueDateValue, "PPP")
-              ) : (
-                <span>Pick a due date</span>
-              )}
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="w-auto p-0">
-            <Calendar
-              mode="single"
-              selected={dueDateValue}
-              onSelect={setDueDateValue}
-              initialFocus
-            />
-          </PopoverContent>
-        </Popover>
-        <div className="flex space-x-2 items-center">
-          <Update className="xl:size-6 size-4" />
-          <p className="p-small">{timeDifferenceString}</p>
-        </div>
+        {checkValue == false && (
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant={"outline"}
+                className={cn(
+                  "w-fill justify-start text-left font-normal",
+                  !dueDateValue && "text-muted-foreground"
+                )}>
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {dueDateValue ? (
+                  format(dueDateValue, "PPP")
+                ) : (
+                  <span>Pick a due date</span>
+                )}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0">
+              <Calendar
+                mode="single"
+                selected={dueDateValue}
+                onSelect={handleDueDateChange}
+                initialFocus
+              />
+            </PopoverContent>
+          </Popover>
+        )}
+        {checkValue == false && (
+          <div className="flex space-x-2 items-center">
+            <Update className="xl:size-6 size-4" />
+            <p className="p-small">{timeDifferenceString}</p>
+          </div>
+        )}
         <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
       </div>
     </div>
