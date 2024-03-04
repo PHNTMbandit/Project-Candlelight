@@ -13,7 +13,7 @@ export interface LogInCredentials {
 }
 
 export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData("/api/users", {
+  const response = await fetchData("https://candlelight.pittari.de/api/users", {
     method: "GET",
   });
 
@@ -21,31 +21,37 @@ export async function getLoggedInUser(): Promise<User> {
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {
-  const response = await fetchData("/api/users/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  });
+  const response = await fetchData(
+    "https://candlelight.pittari.de/api/users/signup",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }
+  );
 
   return response.json();
 }
 
 export async function logIn(credentials: LogInCredentials): Promise<User> {
-  const response = await fetchData("/api/users/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(credentials),
-  });
+  const response = await fetchData(
+    "https://candlelight.pittari.de/api/users/login",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(credentials),
+    }
+  );
 
   return response.json();
 }
 
 export async function logOut() {
-  await fetchData("/api/users/logout", {
+  await fetchData("https://candlelight.pittari.de/api/users/logout", {
     method: "POST",
   });
 }
