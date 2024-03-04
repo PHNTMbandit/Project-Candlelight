@@ -15,6 +15,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { Update } from "@styled-icons/material-sharp/Update";
 
 interface TaskProps {
   task: TaskModel;
@@ -28,6 +29,25 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
   const [dueDateValue, setDueDateValue] = useState<Date | undefined>(
     task.dueDate
   );
+
+  let timeDifferenceString;
+  if (dueDateValue !== undefined) {
+    const timeDifference =
+      new Date(dueDateValue).getTime() - new Date().getTime();
+    const daysUntil = Math.ceil(timeDifference / (1000 * 3600 * 24));
+
+    if (daysUntil != undefined) {
+      if (daysUntil > 1) {
+        timeDifferenceString = `Due in ${daysUntil} days`;
+      } else if (daysUntil == 0) {
+        timeDifferenceString = `Due Today`;
+      } else if (daysUntil < 0) {
+        timeDifferenceString = "Overdue";
+      } else if (daysUntil == 1) {
+        timeDifferenceString = "Due Tomorrow";
+      }
+    }
+  }
 
   const handleSubmitChange = () => {
     if (
@@ -100,6 +120,10 @@ const Task = ({ task, onDeleteClick, onUpdateTask }: TaskProps) => {
             />
           </PopoverContent>
         </Popover>
+        <div className="flex space-x-2 items-center">
+          <Update className="xl:size-6 size-4" />
+          <p className="p-small">{timeDifferenceString}</p>
+        </div>
         <p className="text-xs text-muted-foreground">{createdUpdatedText}</p>
       </div>
     </div>
