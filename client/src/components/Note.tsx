@@ -16,18 +16,14 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTitleValue(e.target.value);
+    note.title = e.target.value;
+    onUpdateNote(note);
   };
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setTextValue(e.target.value);
-  };
-
-  const handleSubmitChange = () => {
-    if (note.title !== titleValue || note.text !== textValue) {
-      note.title = titleValue;
-      note.text = textValue;
-      onUpdateNote(note);
-    }
+    note.text = e.target.value;
+    onUpdateNote(note);
   };
 
   let createdUpdatedText: string;
@@ -38,34 +34,26 @@ const Note = ({ note, onDeleteClick, onUpdateNote }: NoteProps) => {
   }
 
   return (
-    <div className="flex items-start group gap-3">
+    <div className="flex items-center group gap-3">
       <button
         className="invisible group-hover:visible"
         onClick={() => onDeleteClick(note)}>
         <Trash size={26} />
       </button>
-      <div className="flex flex-col gap-4 group w-96 h-full p-4 border-2 rounded-lg outline-primary hover:outline">
+      <div className="flex flex-col gap-4 group xl:w-[450px] p-4 border-2 rounded-lg outline-primary hover:outline">
         <AutoExpandingTextArea
           className="h4-medium"
           placeholder="Title"
           value={titleValue}
           onChange={handleTitleChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTitleChange(e);
-            handleSubmitChange();
-          }}
         />
         <AutoExpandingTextArea
-          className=""
+          className="p"
           placeholder="Text"
           value={textValue}
           onChange={handleTextChange}
-          onBlur={(e: React.ChangeEvent<HTMLTextAreaElement>) => {
-            handleTextChange(e);
-            handleSubmitChange();
-          }}
         />
-        <p className="text-xs text-muted-foreground mt-8">
+        <p className="text-xs xl:text-sm text-muted-foreground mt-8">
           {createdUpdatedText}
         </p>
       </div>

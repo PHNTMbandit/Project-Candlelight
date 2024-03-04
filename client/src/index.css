@@ -69,6 +69,10 @@
   .p {
     @apply xl:text-base text-sm tracking-tight;
   }
+
+  .p-small {
+    @apply xl:text-sm text-xs tracking-tight;
+  }
 }
 
 @layer base {

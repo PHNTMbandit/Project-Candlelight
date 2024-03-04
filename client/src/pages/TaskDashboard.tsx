@@ -1,18 +1,20 @@
-import * as NotesApi from "../api/notes-api";
+import * as TasksApi from "../api/tasks-api";
 import * as UserApi from "../api/users-api";
 import { useEffect, useState } from "react";
-import { Note as NoteModel } from "../models/note";
-import { NoteInput } from "../api/notes-api";
-import { Plus } from "styled-icons/boxicons-regular";
+import { Task as TaskModel } from "../models/task";
+import { TaskInput } from "@/api/tasks-api";
+import { Add } from "@styled-icons/remix-line/Add";
+import Task from "@/components/Task";
 
 const TaskDashboard = () => {
-  const [notes, setNotes] = useState<NoteModel[]>([]);
+  const [tasks, setTasks] = useState<TaskModel[]>([]);
 
   useEffect(() => {
     async function fetchLoggedInUser() {
       try {
         await UserApi.getLoggedInUser();
       } catch (error) {
+        window.location.href = "/login";
         console.error(error);
       }
     }
@@ -22,8 +24,8 @@ const TaskDashboard = () => {
   useEffect(() => {
     async function loadTasks() {
       try {
-        const notes = await NotesApi.fetchNotes();
-        setNotes(notes);
+        const tasks = await TasksApi.fetchTasks();
+        setTasks(tasks);
       } catch (error) {
         console.error(error);
       }
@@ -31,32 +33,32 @@ const TaskDashboard = () => {
     loadTasks();
   }, []);
 
-  async function createTask(note: NoteInput) {
+  async function createTask(task: TaskInput) {
     try {
-      const newNote = await NotesApi.createNote(note);
-      setNotes([...notes, newNote]);
+      const newTask = await TasksApi.createTask(task);
+      setTasks([...tasks, newTask]);
     } catch (error) {
       console.error(error);
       alert(error);
     }
   }
 
-  async function deleteTask(note: NoteModel) {
+  async function deleteTask(task: TaskModel) {
     try {
-      await NotesApi.deleteNote(note._id);
-      setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
+      await TasksApi.deleteTask(task._id);
+      setTasks(tasks.filter((existingTask) => existingTask._id !== task._id));
     } catch (error) {
       console.error(error);
       alert(error);
     }
   }
 
-  async function updateTask(note: NoteModel) {
+  async function updateTask(task: TaskModel) {
     try {
-      await NotesApi.updateNote(note._id, note);
-      setNotes(
-        notes.map((existingNote) =>
-          existingNote._id === note._id ? note : existingNote
+      await TasksApi.updateTask(task._id, task);
+      setTasks(
+        tasks.map((existingTask) =>
+          existingTask._id === task._id ? task : existingTask
         )
       );
     } catch (error) {
@@ -69,11 +71,29 @@ const TaskDashboard = () => {
     <div className="space-y-6 p-6">
       <h1 className="h4-medium">Tasks</h1>
       <div className="space-x-4">
-        <button onClick={() => createTask({ title: "", text: "" })}>
-          <Plus size={26} />
+        <button
+          onClick={() =>
+            createTask({ title: "", check: false, dueDate: new Date() })
+          }>
+          <Add size={32} />
         </button>
       </div>
-      <div></div>
+      <div>
+        {tasks.length > 0 ? (
+          <div className="flex flex-wrap items-start gap-10">
+            {tasks.map((task, index) => (
+              <Task
+                key={index}
+                task={task}
+                onDeleteClick={deleteTask}
+                onUpdateTask={updateTask}
+              />
+            ))}
+          </div>
+        ) : (
+          <p>No new tasks</p>
+        )}
+      </div>
     </div>
   );
 };
