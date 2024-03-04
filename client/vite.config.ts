@@ -13,7 +13,8 @@ export default defineConfig({
     proxy: {
       "/api": {
         target: "https://candlelight.pittari.de",
-        changeOrigin: true,
+        changeOrigin: false,
+        secure: true,
       },
     },
   },
