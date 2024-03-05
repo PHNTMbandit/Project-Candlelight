@@ -9,14 +9,4 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "https://candlelight.pittari.de",
-        changeOrigin: true,
-        secure: false,
-        ws: true,
-      },
-    },
-  },
 });

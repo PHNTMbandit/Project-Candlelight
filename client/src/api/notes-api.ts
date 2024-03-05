@@ -4,6 +4,7 @@ import { fetchData } from "./api";
 export async function fetchNotes(): Promise<Note[]> {
   const response = await fetchData("https://candlelight.pittari.de/api/notes", {
     method: "GET",
+    credentials: "include",
   });
   return response.json();
 }
@@ -20,6 +21,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(note),
+    credentials: "include",
   });
 
   return response.json();
@@ -28,6 +30,7 @@ export async function createNote(note: NoteInput): Promise<Note> {
 export async function deleteNote(noteId: string) {
   await fetchData(`https://candlelight.pittari.de/api/notes/${noteId}`, {
     method: "DELETE",
+    credentials: "include",
   });
 }
 
@@ -43,6 +46,7 @@ export async function updateNote(
         "Content-Type": "application/json",
       },
       body: JSON.stringify(note),
+      credentials: "include",
     }
   );
   return response.json();

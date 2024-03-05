@@ -10,15 +10,12 @@ import notesRoutes from "./routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import { requiresAuth } from "./middleware/auth";
-import cookieParser from "cookie-parser";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cookieParser());
-app.use(express.urlencoded({ extended: false }));
 
 app.use(
   session({
@@ -27,9 +24,6 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      httpOnly: true,
-      secure: true,
-      sameSite: "none",
     },
     rolling: true,
     store: MongoStore.create({

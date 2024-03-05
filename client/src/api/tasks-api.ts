@@ -4,6 +4,7 @@ import { fetchData } from "./api";
 export async function fetchTasks(): Promise<Task[]> {
   const response = await fetchData("https://candlelight.pittari.de/api/tasks", {
     method: "GET",
+    credentials: "include",
   });
   return response.json();
 }
@@ -21,6 +22,7 @@ export async function createTask(task: TaskInput): Promise<Task> {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(task),
+    credentials: "include",
   });
 
   return response.json();
@@ -29,6 +31,7 @@ export async function createTask(task: TaskInput): Promise<Task> {
 export async function deleteTask(taskId: string) {
   await fetchData(`https://candlelight.pittari.de/api/tasks/${taskId}`, {
     method: "DELETE",
+    credentials: "include",
   });
 }
 
@@ -43,6 +46,7 @@ export async function updateTask(
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(task),
     }
   );
