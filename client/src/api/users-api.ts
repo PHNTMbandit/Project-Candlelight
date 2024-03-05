@@ -42,12 +42,13 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
 
 export async function logIn(credentials: LogInCredentials): Promise<User> {
   const response = await fetchData(
-    "https://project-candlelight-server.vercel.app/api/users/login",
+    "https://candlelight.pittari.de/api/users/login",
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify(credentials),
     }
   );
@@ -60,7 +61,6 @@ export async function logOut() {
     "https://project-candlelight-server.vercel.app/api/users/logout",
     {
       method: "POST",
-      credentials: "include",
     }
   );
 }
