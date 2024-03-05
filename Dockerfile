@@ -1,7 +1,7 @@
 FROM node:slim
 WORKDIR /app
-COPY package.json /app
+COPY ./server/package.json /app
 RUN npm install
-COPY . /app/
+COPY ./server/. /app/
 EXPOSE 5000
 CMD [ "npm", "start" ]
