@@ -41,7 +41,8 @@ export const LogInPage = ({ onLoggedIn }: LogInPageProps) => {
     try {
       const user = await UserApi.logIn(values);
       onLoggedIn(user);
-      window.location.href = "/notes";
+      console.log(user);
+      // window.location.href = "/notes";
     } catch (error) {
       alert(error);
       console.error(error);

@@ -26,7 +26,7 @@ app.use(
       maxAge: 60 * 60 * 1000,
       secure: true,
       httpOnly: true,
-      sameSite: "none",
+      sameSite: false,
     },
     rolling: true,
     store: MongoStore.create({
