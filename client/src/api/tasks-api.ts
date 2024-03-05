@@ -2,10 +2,13 @@ import { Task } from "@/models/task";
 import { fetchData } from "./api";
 
 export async function fetchTasks(): Promise<Task[]> {
-  const response = await fetchData("https://candlelight.pittari.de/api/tasks", {
-    method: "GET",
-    credentials: "include",
-  });
+  const response = await fetchData(
+    "https://project-candlelight-server.vercel.app/api/tasks",
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
   return response.json();
 }
 
@@ -16,23 +19,29 @@ export interface TaskInput {
 }
 
 export async function createTask(task: TaskInput): Promise<Task> {
-  const response = await fetchData("https://candlelight.pittari.de/api/tasks", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(task),
-    credentials: "include",
-  });
+  const response = await fetchData(
+    "https://project-candlelight-server.vercel.app/api/tasks",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(task),
+      credentials: "include",
+    }
+  );
 
   return response.json();
 }
 
 export async function deleteTask(taskId: string) {
-  await fetchData(`https://candlelight.pittari.de/api/tasks/${taskId}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
+  await fetchData(
+    `https://project-candlelight-server.vercel.app/api/tasks/${taskId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
 }
 
 export async function updateTask(
@@ -40,7 +49,7 @@ export async function updateTask(
   task: TaskInput
 ): Promise<Task> {
   const response = await fetchData(
-    `https://candlelight.pittari.de/api/tasks/${taskId}`,
+    `https://project-candlelight-server.vercel.app/api/tasks/${taskId}`,
     {
       method: "PATCH",
       headers: {

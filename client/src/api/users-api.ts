@@ -13,17 +13,20 @@ export interface LogInCredentials {
 }
 
 export async function getLoggedInUser(): Promise<User> {
-  const response = await fetchData("https://candlelight.pittari.de/api/users", {
-    method: "GET",
-    credentials: "include",
-  });
+  const response = await fetchData(
+    "https://project-candlelight-server.vercel.app/api/users",
+    {
+      method: "GET",
+      credentials: "include",
+    }
+  );
 
   return response.json();
 }
 
 export async function signUp(credentials: SignUpCredentials): Promise<User> {
   const response = await fetchData(
-    "https://candlelight.pittari.de/api/users/signup",
+    "https://project-candlelight-server.vercel.app/api/users/signup",
     {
       method: "POST",
       headers: {
@@ -39,7 +42,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
 
 export async function logIn(credentials: LogInCredentials): Promise<User> {
   const response = await fetchData(
-    "https://candlelight.pittari.de/api/users/login",
+    "https://project-candlelight-server.vercel.app/api/users/login",
     {
       method: "POST",
       headers: {
@@ -54,8 +57,11 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
 }
 
 export async function logOut() {
-  await fetchData("https://candlelight.pittari.de/api/users/logout", {
-    method: "POST",
-    credentials: "include",
-  });
+  await fetchData(
+    "https://project-candlelight-server.vercel.app/api/users/logout",
+    {
+      method: "POST",
+      credentials: "include",
+    }
+  );
 }
