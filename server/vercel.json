@@ -13,7 +13,7 @@
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://project-candlelight.vercel.app/"
+          "value": "https://project-candlelight.vercel.app"
         },
         {
           "key": "Access-Control-Allow-Methods",
