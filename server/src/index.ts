@@ -17,7 +17,9 @@ const port = env.PORT;
 
 app.use(express.json());
 app.use(morgan("dev"));
-app.use(cors({ origin: true, credentials: true }));
+app.use(
+  cors({ origin: "https://project-candlelight.vercel.app", credentials: true })
+);
 
 mongoose.connect(env.MONGO_CONNECTION_STRING);
 
