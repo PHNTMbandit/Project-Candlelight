@@ -1,15 +1,15 @@
 import "dotenv/config";
 import cors from "cors";
 import morgan from "morgan";
-import env from "./util/validateEnv";
+import env from "./src/util/validateEnv";
 import session from "express-session";
-import userRoutes from "./routes/user";
-import tasksRoutes from "./routes/tasks";
+import userRoutes from "./src/routes/user";
+import tasksRoutes from "./src/routes/tasks";
 import MongoStore from "connect-mongo";
-import notesRoutes from "./routes/notes";
+import notesRoutes from "./src/routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
-import { requiresAuth } from "./middleware/auth";
+import { requiresAuth } from "./src/middleware/auth";
 import mongoose from "mongoose";
 
 const app = express();
