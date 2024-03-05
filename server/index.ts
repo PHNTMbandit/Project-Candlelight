@@ -17,7 +17,7 @@ const port = env.PORT;
 
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 
 mongoose.connect(env.MONGO_CONNECTION_STRING);
 
