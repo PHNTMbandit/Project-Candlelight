@@ -42,7 +42,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
 
 export async function logIn(credentials: LogInCredentials): Promise<User> {
   const response = await fetchData(
-    "https://candlelight.pittari.de/api/users/login",
+    "https://project-candlelight-server.vercel.app/api/users/login",
     {
       method: "POST",
       headers: {
