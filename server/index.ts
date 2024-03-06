@@ -19,6 +19,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
+    preflightContinue: true,
     origin: "https://project-candlelight.vercel.app",
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
