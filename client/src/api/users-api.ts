@@ -17,7 +17,7 @@ export async function getLoggedInUser(): Promise<User> {
     "https://project-candlelight-server.vercel.app/api/users",
     {
       method: "GET",
-      // credentials: "include",
+      credentials: "include",
     }
   );
 
@@ -32,7 +32,7 @@ export async function signUp(credentials: SignUpCredentials): Promise<User> {
       headers: {
         "Content-Type": "application/json",
       },
-      // credentials: "include",
+      credentials: "include",
       body: JSON.stringify(credentials),
     }
   );
