@@ -47,7 +47,6 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Access-Control-Allow-Credentials": "true",
       },
       credentials: "include",
       body: JSON.stringify(credentials),
@@ -62,6 +61,7 @@ export async function logOut() {
     "https://project-candlelight-server.vercel.app/api/users/logout",
     {
       method: "POST",
+      credentials: "include",
     }
   );
 }
