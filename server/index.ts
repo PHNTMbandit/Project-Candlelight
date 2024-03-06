@@ -11,6 +11,7 @@ import notesRoutes from "./src/routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import { requiresAuth } from "./src/middleware/auth";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = env.PORT;
@@ -23,6 +24,7 @@ app.use(
     credentials: true,
   })
 );
+app.use(cookieParser());
 
 mongoose.connect(env.MONGO_CONNECTION_STRING);
 
