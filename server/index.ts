@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://candlelightdb.vercel.app",
+    origin: true,
     credentials: true,
   })
 );
@@ -35,7 +35,6 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      secure: true,
       sameSite: "none",
     },
     rolling: true,
@@ -67,10 +66,6 @@ app.use((error: unknown, req: Request, res: Response, next: NextFunction) => {
 
 app.listen(port, () => {
   console.log(`Server started on port:${port}`);
-});
-
-app.options("/*", (_, res) => {
-  res.sendStatus(200);
 });
 
 module.exports = app;
