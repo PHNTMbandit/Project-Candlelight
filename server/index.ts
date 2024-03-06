@@ -21,7 +21,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://candlelightdb.vercel.app",
+    origin: "*",
     credentials: true,
   })
 );
@@ -38,7 +38,7 @@ app.use(
       maxAge: 60 * 60 * 1000,
       sameSite: "none",
       httpOnly: true,
-      secure: true,
+      secure: "auto",
     },
     rolling: true,
     store: MongoStore.create({
