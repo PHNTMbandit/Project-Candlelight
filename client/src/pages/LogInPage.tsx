@@ -42,7 +42,7 @@ export const LogInPage = ({ onLoggedIn }: LogInPageProps) => {
       const user = await UserApi.logIn(values);
       onLoggedIn(user);
       console.log(user);
-      // window.location.href = "/notes";
+      window.location.href = "/notes";
     } catch (error) {
       alert(error);
       console.error(error);
