@@ -45,8 +45,6 @@ const NotesDashboard = () => {
 
   async function deleteNote(note: NoteModel) {
     try {
-      const index = notes.indexOf(note);
-      setNotes(notes.splice(index, 1));
       await NotesApi.deleteNote(note._id);
       setNotes(notes.filter((existingNote) => existingNote._id !== note._id));
     } catch (error) {
