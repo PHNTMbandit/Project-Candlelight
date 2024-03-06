@@ -48,7 +48,7 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
       headers: {
         "Content-Type": "application/json",
       },
-      credentials: "include",
+      // credentials: "include",
       body: JSON.stringify(credentials),
     }
   );

@@ -1,6 +1,7 @@
 import "dotenv/config";
 import cors from "cors";
 import morgan from "morgan";
+import mongoose from "mongoose";
 import env from "./src/util/validateEnv";
 import session from "express-session";
 import userRoutes from "./src/routes/user";
@@ -10,7 +11,6 @@ import notesRoutes from "./src/routes/notes";
 import createHttpError, { isHttpError } from "http-errors";
 import express, { NextFunction, Request, Response } from "express";
 import { requiresAuth } from "./src/middleware/auth";
-import mongoose from "mongoose";
 
 const app = express();
 const port = env.PORT;
