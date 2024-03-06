@@ -68,6 +68,10 @@ app.listen(port, () => {
   console.log(`Server started on port:${port}`);
 });
 
+app.options("/*", (_, res) => {
+  res.sendStatus(200);
+});
+
 module.exports = app;
 
 export default app;
