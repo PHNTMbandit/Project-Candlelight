@@ -23,6 +23,15 @@ app.use(
   cors({
     origin: "https://candlelightdb.vercel.app",
     credentials: true,
+    allowedHeaders: [
+      "Authorization",
+      "Content-Type",
+      "membership-id",
+      "account-id",
+      "X-Requested-With",
+      "Accept",
+      "Origin",
+    ],
   })
 );
 
@@ -35,7 +44,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      sameSite: "strict",
+      sameSite: "none",
+      httpOnly: true,
       secure: true,
     },
     rolling: true,
