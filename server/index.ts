@@ -16,15 +16,15 @@ import cookieParser from "cookie-parser";
 const app = express();
 const port = env.PORT;
 
+app.use(cookieParser());
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: true,
+    origin: "https://candlelightdb.vercel.app/",
     credentials: true,
   })
 );
-app.use(cookieParser());
 
 mongoose.connect(env.MONGO_CONNECTION_STRING);
 
@@ -35,7 +35,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 60 * 60 * 1000,
-      sameSite: "lax",
+      sameSite: "none",
       secure: true,
     },
     rolling: true,
