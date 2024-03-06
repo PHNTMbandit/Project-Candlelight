@@ -47,8 +47,9 @@ export async function logIn(credentials: LogInCredentials): Promise<User> {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Access-Control-Allow-Credentials": "true",
       },
-      // credentials: "include",
+      credentials: "include",
       body: JSON.stringify(credentials),
     }
   );
