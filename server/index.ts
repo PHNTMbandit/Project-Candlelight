@@ -23,17 +23,9 @@ app.use(
   cors({
     origin: "https://candlelightdb.vercel.app",
     credentials: true,
-    allowedHeaders: [
-      "Authorization",
-      "Content-Type",
-      "membership-id",
-      "account-id",
-      "X-Requested-With",
-      "Accept",
-      "Origin",
-    ],
   })
 );
+app.set("trust proxy", 1);
 
 mongoose.connect(env.MONGO_CONNECTION_STRING);
 
