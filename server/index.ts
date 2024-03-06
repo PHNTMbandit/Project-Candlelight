@@ -20,7 +20,7 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(
   cors({
-    origin: "https://project-candlelight.vercel.app",
+    origin: "https://candlelightdb.vercel.app/",
     credentials: true,
   })
 );
