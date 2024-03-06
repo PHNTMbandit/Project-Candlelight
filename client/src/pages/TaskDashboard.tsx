@@ -45,6 +45,8 @@ const TaskDashboard = () => {
 
   async function deleteTask(task: TaskModel) {
     try {
+      const index = tasks.indexOf(task);
+      setTasks(tasks.splice(index, 1));
       await TasksApi.deleteTask(task._id);
       setTasks(tasks.filter((existingTask) => existingTask._id !== task._id));
     } catch (error) {
