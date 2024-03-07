@@ -3,7 +3,13 @@ import LogInPage from "./pages/LogInPage";
 import SignUpPage from "./pages/SignUpPage";
 import NotesDashboard from "./pages/NotesDashboard";
 import { useUserContext } from "./contexts/UserContextProvider";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
 import ActionBar from "./components/ActionBar";
 import TaskDashboard from "./pages/TaskDashboard";
 
@@ -15,7 +21,7 @@ function App() {
       <Routes>
         <Route
           path="/"
-          element={(window.location.href = "/notes")}
+          element={<Navigate to="/login" />}
         />
         <Route
           path="/notes"
