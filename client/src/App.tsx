@@ -14,6 +14,10 @@ function App() {
     <Router>
       <Routes>
         <Route
+          path="/"
+          element={(window.location.href = "/notes")}
+        />
+        <Route
           path="/notes"
           element={
             <>
